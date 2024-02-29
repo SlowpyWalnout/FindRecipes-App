@@ -4,6 +4,24 @@ import React from 'react';
 import RecipeSheet from './src/components/recipesheet';
 
 export default function App() {
+
+  
+  const [recipe, setRecipe] = useState('');
+  const [recipeData, setRecipeData] = useState(null);
+  const [error, setError] = useState(null);
+
+  const fetchRecipeApp = async () => {
+    try {
+      const res = await fetch('https://api.edamam.com/doc/open-api/recipe-search-v2.json');
+      const data = await res.json();
+      setRecipeData(data);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError('Error fetching Recipe data');
+    }
+  };
+
   return (
     <View style = {styles.container}>
       <ScrollView>
