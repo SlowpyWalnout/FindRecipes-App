@@ -1,62 +1,96 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
 
 export default function App() {
+  const [recipeData, setRecipeData] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState(null);
 
+  const fetchRecipes = async () => {
+    try {
+      const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=38f71c94&app_key=0f8e5f1d4850a323555c2dc751ea1459`);
+      const data = await response.json();
+      setRecipeData(data);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError('Error fetching Recipe data');
+    }
+  };
 
   useEffect(() => {
-  
-    const [recipeData, setRecipeData] = useState(null);
-    const [error, setError] = useState(null);
+    if (searchQuery.trim() !== '') {
+      fetchRecipes();
+    }
+  }, [searchQuery]);
 
-    const fetchRecipeApp = async () => {
-      try {
-        const res = await fetch('https://api.edamam.com/doc/open-api/recipe-search-v2.json');
-        const data = await res.json();
-        setRecipeData(data);
-        setError(null);
-      } catch (error) {
-        console.error(error);
-        setError('Error fetching Recipe data');
-      }
-    };
-
-    fetchRecipeApp();
-
-  }, []);
-
-  if (error) {
-    return <Text>{error}</Text>;
-  }
-
-  if (!recipeData) {
-    return <Text>Searching</Text>;
-  }
+  const handleSearch = () => {
+    fetchRecipes();
+  };
 
   return (
-    <View>
-      {recipeData.hits.map(hit =>{
-        const {recipe} = hit;
-        return (
-          <View key={recipe.uri}>
-            <Text style={styles.title}> Nombre de la receta: {recipe.label}</Text>
-          
-          </View>
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Search recipes..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+      <Button
+        title="Search"
+        onPress={handleSearch}
+      />
 
-        );
+      {error && <Text>{error}</Text>}
 
-      })}
-
+      <ScrollView style={styles.recipeContainer}>
+        {recipeData && recipeData.hits && recipeData.hits.map(hit => {
+          const { recipe } = hit;
+          return (
+            <View key={recipe.uri} style={styles.recipe}>
+              <Text style={styles.title}>{recipe.label}</Text>
+              <Text style={styles.ingredients}>{recipe.ingredientLines.join('\n')}</Text>
+              
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
-
-  
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  input: {
+    width: '80%',
+    marginBottom: 10,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+  },
+  recipeContainer: {
+    marginTop: 10,
+    width: '100%',
+  },
+  recipe: {
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    borderRadius: 5,
+  },
   title: {
-    fontSize:20,
-    fontVariant: 'bold',
-    color:'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  ingredients: {
+    fontSize: 16,
   },
 });
