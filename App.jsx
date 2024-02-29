@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import React from 'react';
 import RecipeSheet from './src/components/recipesheet';
+import Findbar from './Findbar';
 
 export default function App() {
 
@@ -24,6 +25,7 @@ export default function App() {
 
   return (
     <View style = {styles.container}>
+      <Findbar onSearch={fetchRecipeApp} />
       <ScrollView>
         <RecipeSheet
           name="Pizza"
