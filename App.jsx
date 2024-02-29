@@ -1,19 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView} from 'react-native';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
 import RecipeSheet from './src/components/recipesheet';
-import Findbar from './src/components/Findbar';
-export default function App() {
 
-  
-  const [recipe, setRecipe] = useState('');
+export default function App() {
   const [recipeData, setRecipeData] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
 
-  const fetchRecipeApp = async () => {
+  const fetchRecipes = async () => {
     try {
-      const res = await fetch('https://api.edamam.com/doc/open-api/recipe-search-v2.json');
-      const data = await res.json();
+      const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=38f71c94&app_key=0f8e5f1d4850a323555c2dc751ea1459`);
+      const data = await response.json();
       setRecipeData(data);
       setError(null);
     } catch (error) {
@@ -22,26 +19,50 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    if (searchQuery.trim() !== '') {
+      fetchRecipes();
+    }
+  }, [searchQuery]);
+
+  const handleSearch = () => {
+    fetchRecipes();
+  };
+
   return (
-    <View style = {styles.container}>
-      <Findbar/>
-      <ScrollView>
-        <RecipeSheet
-          name="Pizza"
-          image="https://www.laespanolaaceites.com/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg"
-          description="This is a pizza"
-          ingredients="Flour, Cheese, Tomato, Olive, Mushroom"
-        />
-        <RecipeSheet
-          name="Burger"
-          image={"https://sevilla.abc.es/contenidopromocionado/wp-content/uploads/sites/2/2019/09/portada-wp-burguer.jpeg"}
-          description="This is a burger"
-          ingredients="Bread, Cheese, Tomato, Onion, Meat"
-        />
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Search recipes..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+      <Button
+        title="Search"
+        onPress={handleSearch}
+      />
+
+      {error && <Text>{error}</Text>}
+
+      <ScrollView style={styles.recipeContainer}>
+        {recipeData && recipeData.hits && recipeData.hits.map(hit => {
+          const { recipe } = hit;
+          return (
+            
+            <RecipeSheet
+              key={recipe.uri}
+              dietlabels={recipe.dietLabels}
+              foodcategory={recipe.cuisineType}
+              RecipeTitle={recipe.label}
+              ingredients={recipe.ingredientLines}              image={recipe.image}
+              weight={recipe.totalWeight}
+              procedure={recipe.url}
+            />
+          );
+        })}
       </ScrollView>
     </View>
-    );
-    
+  );
 }
 
 const styles = StyleSheet.create({
@@ -50,7 +71,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
-    height: "100%",
+    padding: 20,
+  },
+  input: {
+    width: '80%',
+    marginBottom: 10,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+  },
+  recipeContainer: {
+    marginTop: 10,
+    width: '100%',
+  },
+  recipe: {
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    borderRadius: 5,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  ingredients: {
+    fontSize: 16,
   },
 });

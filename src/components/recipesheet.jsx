@@ -1,16 +1,38 @@
 import React from "react";
-import {View, Text, StyleSheet, Image} from "react-native";
+import {View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Linking} from "react-native";
 
 const RecipeSheet = (props) => {
-    const { name, image, description, ingredients } = props;
+    const {RecipeTitle, ingredients, procedure, image, weight, foodcategory, dietlabels} = props;
+        // Asegúrate de que ingredients es un array
+        let ingredientsArray;
+        if (Array.isArray(ingredients)) {
+            ingredientsArray = ingredients;
+        } else if (typeof ingredients === 'string') {
+            ingredientsArray = ingredients.split(', ');
+        } else {
+            ingredientsArray = [];
+        }    
     return (
         <View style={styles.container}>
             <View style={styles.card}>
                 <Image source={{ uri: image }} style={styles.image} />
                 <View style={styles.cardBody}>
-                    <Text style={styles.cardTitle}>{name}</Text>
-                    <Text style={styles.cardText}>{description}</Text>
-                    <Text style={styles.cardText}>{ingredients}</Text>
+
+                    <Text style={styles.foodcategory}>{foodcategory}</Text>
+                    {/* <Text style={styles.foodcategory}>{dietlabels}</Text> */}
+                    <Text style={styles.cardTitle}>{RecipeTitle}</Text>
+                    <FlatList 
+                        data={ingredientsArray}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item }) => (
+                            <Text style={styles.ingredient}>- {item}</Text>
+                        )}
+                        scrollEnabled={false}
+                    />
+                    <Text style={styles.wightText}>{parseFloat(weight).toFixed(2)} gr.</Text>
+                    <TouchableOpacity style={styles.viewRecipeButton} onPress={() => Linking.openURL(procedure)}>
+                        <Text style={styles.viewRecipeButtonText}>View Recipe</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -51,10 +73,33 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
     },
-    cardText: {
-        fontSize: 16,
-        marginVertical: 10,
+    cardIngredients: {
+        fontSize: 18,
     },
-
+    wightText: {
+        fontSize: 18,
+    },
+    foodcategory: {
+        backgroundColor: "white",
+        borderColor: "black",
+        borderWidth: 1,
+        borderRadius: 5,
+        alignSelf: 'flex-start', // Añade esto
+        padding: 5,
+        textAlign: "center",
+        fontSize: 18,
+    },
+    viewRecipeButton: {
+        backgroundColor: "#eb3b5a",
+        width: "100%",
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
+    },
+    viewRecipeButtonText: {
+        color: "#fff",
+        fontSize: 18,
+        textAlign: "center",
+    },
 });
 export default RecipeSheet;
