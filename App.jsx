@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import React from 'react';
 import RecipeSheet from './src/components/recipesheet';
-import Findbar from './Findbar';
+import Findbar from './src/components/Findbar';
 
 export default function App() {
 
