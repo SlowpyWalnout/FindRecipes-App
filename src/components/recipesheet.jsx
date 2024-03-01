@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Linking} from
 
 const RecipeSheet = (props) => {
     const {RecipeTitle, ingredients, procedure, image, weight, foodcategory, dietlabels} = props;
-        // Asegúrate de que ingredients es un array
         let ingredientsArray;
         if (Array.isArray(ingredients)) {
             ingredientsArray = ingredients;
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderWidth: 1,
         borderRadius: 5,
-        alignSelf: 'flex-start', // Añade esto
+        alignSelf: 'flex-start', 
         padding: 5,
         textAlign: "center",
         fontSize: 18,
