@@ -20,15 +20,16 @@ const RecipeSheet = (props) => {
                     <Text style={styles.foodcategory}>{foodcategory}</Text>
                     {/* <Text style={styles.foodcategory}>{dietlabels}</Text> */}
                     <Text style={styles.cardTitle}>{RecipeTitle}</Text>
+                    <Text style={styles.wightText}>Ingredients:</Text>
                     <FlatList 
                         data={ingredientsArray}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
-                            <Text style={styles.ingredient}>- {item}</Text>
+                            <Text style={styles.ingredient}>• {item}</Text>
                         )}
                         scrollEnabled={false}
                     />
-                    <Text style={styles.wightText}>{parseFloat(weight).toFixed(2)} gr.</Text>
+                    <Text style={styles.wightText}>Calories: {parseFloat(weight).toFixed(2)} gr.</Text>
                     <TouchableOpacity style={styles.viewRecipeButton} onPress={() => Linking.openURL(procedure)}>
                         <Text style={styles.viewRecipeButtonText}>View Recipe</Text>
                     </TouchableOpacity>

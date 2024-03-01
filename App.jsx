@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
+    marginTop: 40,
   },
   recipeContainer: {
     marginTop: 10,
