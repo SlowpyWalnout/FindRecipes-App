@@ -31,6 +31,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.appTitle}>Recipe Search Engine</Text>
       <TextInput
         style={styles.input}
         placeholder="Search recipes..."
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    marginTop: 30,
   },
   input: {
     width: '80%',
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
-    marginTop: 40,
+    marginTop: 20,
   },
   recipeContainer: {
     marginTop: 10,
@@ -99,5 +101,15 @@ const styles = StyleSheet.create({
   },
   ingredients: {
     fontSize: 16,
+  },
+  appTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#9ec6b8',
+    width: 280,
+    height: 35,
+    color: 'white',
+    borderRadius:6,
   },
 });

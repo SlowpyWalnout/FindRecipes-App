@@ -20,7 +20,7 @@ const RecipeSheet = (props) => {
                     <Text style={styles.foodcategory}>{foodcategory}</Text>
                     {/* <Text style={styles.foodcategory}>{dietlabels}</Text> */}
                     <Text style={styles.cardTitle}>{RecipeTitle}</Text>
-                    <Text style={styles.wightText}>Ingredients:</Text>
+                    <Text style={styles.ingre}>Ingredients</Text>
                     <FlatList 
                         data={ingredientsArray}
                         keyExtractor={(item, index) => index.toString()}
@@ -76,9 +76,29 @@ const styles = StyleSheet.create({
     cardIngredients: {
         fontSize: 18,
     },
+    ingre: {
+        fontSize: 18,
+        color: 'black',
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginVertical:8,
+        backgroundColor: '#C4DBE2',
+        width:85,
+        borderRadius:5,
+    },
     wightText: {
         fontSize: 18,
+        color: 'black',
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+        marginVertical:8,
+        backgroundColor: '#C4DBE2',
+        borderRadius:5,
+        marginLeft:40,
+        marginRight:40,
     },
+
     foodcategory: {
         backgroundColor: "white",
         borderColor: "black",
