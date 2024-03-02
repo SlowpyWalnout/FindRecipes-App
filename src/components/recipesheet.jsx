@@ -1,16 +1,16 @@
 import React from "react";
-import {View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Linking} from "react-native";
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Linking } from "react-native";
 
 const RecipeSheet = (props) => {
-    const {RecipeTitle, ingredients, procedure, image, weight, foodcategory, dietlabels} = props;
-        let ingredientsArray;
-        if (Array.isArray(ingredients)) {
-            ingredientsArray = ingredients;
-        } else if (typeof ingredients === 'string') {
-            ingredientsArray = ingredients.split(', ');
-        } else {
-            ingredientsArray = [];
-        }    
+    const { RecipeTitle, ingredients, procedure, image, weight, foodcategory, dietlabels } = props;
+    let ingredientsArray;
+    if (Array.isArray(ingredients)) {
+        ingredientsArray = ingredients;
+    } else if (typeof ingredients === 'string') {
+        ingredientsArray = ingredients.split(', ');
+    } else {
+        ingredientsArray = [];
+    }
     return (
         <View style={styles.container}>
             <View style={styles.card}>
@@ -21,7 +21,7 @@ const RecipeSheet = (props) => {
                     {/* <Text style={styles.foodcategory}>{dietlabels}</Text> */}
                     <Text style={styles.cardTitle}>{RecipeTitle}</Text>
                     <Text style={styles.ingre}>Ingredients</Text>
-                    <FlatList 
+                    <FlatList
                         data={ingredientsArray}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
@@ -81,10 +81,10 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold',
         fontSize: 20,
-        marginVertical:8,
+        marginVertical: 8,
         backgroundColor: '#C4DBE2',
-        width:85,
-        borderRadius:5,
+        width: 85,
+        borderRadius: 5,
     },
     wightText: {
         fontSize: 18,
@@ -92,11 +92,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         textAlign: 'center',
-        marginVertical:8,
+        marginVertical: 8,
         backgroundColor: '#C4DBE2',
-        borderRadius:5,
-        marginLeft:40,
-        marginRight:40,
+        borderRadius: 5,
+        marginLeft: 40,
+        marginRight: 40,
     },
 
     foodcategory: {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderWidth: 1,
         borderRadius: 5,
-        alignSelf: 'flex-start', 
+        alignSelf: 'flex-start',
         padding: 5,
         textAlign: "center",
         fontSize: 18,
