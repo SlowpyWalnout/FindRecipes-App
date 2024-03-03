@@ -56,6 +56,7 @@ export default function App() {
         <Button
           title="Search"
           onPress={handleSearch}
+          color="#268fbe"
         />
 
         {error && <Text>{error}</Text>}
@@ -87,14 +88,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#e7ffff',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
     marginTop: 30,
+    paddingTop: 40,
   },
   input: {
-    width: '80%',
+    width: '100%',
     marginBottom: 10,
     borderWidth: 1,
     padding: 10,
@@ -124,10 +126,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    backgroundColor: '#9ec6b8',
+    backgroundColor: '#829cd7',
     width: 280,
-    height: 35,
+    height: 45,
     color: 'white',
     borderRadius: 6,
+    marginBottom: 20,
   },
 });
