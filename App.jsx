@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import RecipeSheet from './src/components/recipesheet';
 import CheckboxComponent from './src/components/checkbox';
+import Findbar from './src/components/Findbar';
 
 export default function App() {
   const [recipeData, setRecipeData] = useState(null);
@@ -34,10 +35,6 @@ export default function App() {
     }
   }, [searchQuery, categories]); // Los cambios que se llaman de la función buscar y categorías
 
-  const handleSearch = () => { // Busqueda de las recetas llamando a la función cuando se activa la busqueda
-    fetchRecipes();
-  };
-
   const handleCheckboxChange = (selectedCategories) => { // Llamando a la función del checkbox cuando se selecciona una categoría, manejando sus cambios mediante el handleCheckboxChange
     setCategories(selectedCategories);
   };
@@ -46,23 +43,10 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Text style={styles.appTitle}>Recipe Search Engine</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Search recipes..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        <Button
-          title="Search"
-          onPress={handleSearch}
-          color="#268fbe"
-        />
-
+      <Findbar onSearch={setSearchQuery} />
+      <Text style={styles.instructionsText}>Select the food type that your prefer.</Text>
         {error && <Text>{error}</Text>}
-
         <CheckboxComponent onChange={handleCheckboxChange} />
-
         <ScrollView style={styles.recipeContainer}>
           {recipeData && recipeData.hits && recipeData.hits.map(hit => {
             const { recipe } = hit;
@@ -88,49 +72,21 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e7ffff',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
-    marginTop: 30,
-    paddingTop: 40,
-  },
-  input: {
-    width: '100%',
-    marginBottom: 10,
-    borderWidth: 1,
     padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
+    marginTop: 30,
+    paddingTop: 20,
   },
   recipeContainer: {
     marginTop: 10,
     width: '100%',
   },
-  recipe: {
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 10,
-    borderRadius: 5,
-  },
-  title: {
+  instructionsText: {
+    marginTop: 10,
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  ingredients: {
-    fontSize: 16,
-  },
-  appTitle: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: 'regular',
     textAlign: 'center',
-    backgroundColor: '#829cd7',
-    width: 280,
-    height: 45,
-    color: 'white',
-    borderRadius: 6,
-    marginBottom: 20,
   },
 });

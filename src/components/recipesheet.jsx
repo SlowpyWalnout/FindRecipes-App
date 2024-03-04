@@ -20,7 +20,7 @@ const RecipeSheet = (props) => {
                     <Text style={styles.foodcategory}>{foodcategory}</Text>
                     {/* <Text style={styles.foodcategory}>{dietlabels}</Text> */}
                     <Text style={styles.cardTitle}>{RecipeTitle}</Text>
-                    <Text style={styles.ingre}>Ingredients</Text>
+                    <Text style={styles.ingredientsText}>Ingredients</Text>
                     <FlatList
                         data={ingredientsArray}
                         keyExtractor={(item, index) => index.toString()}
@@ -29,7 +29,7 @@ const RecipeSheet = (props) => {
                         )}
                         scrollEnabled={false}
                     />
-                    <Text style={styles.wightText}>Calories: {parseFloat(weight).toFixed(2)} gr.</Text>
+                    <Text style={styles.weightText}>{parseFloat(weight).toFixed(2)} g</Text>
                     <TouchableOpacity style={styles.viewRecipeButton} onPress={() => Linking.openURL(procedure)}>
                         <Text style={styles.viewRecipeButtonText}>View Recipe</Text>
                     </TouchableOpacity>
@@ -76,32 +76,30 @@ const styles = StyleSheet.create({
     cardIngredients: {
         fontSize: 18,
     },
-    ingre: {
+    ingredientsText: {
         fontSize: 18,
         color: 'black',
         fontWeight: 'bold',
         fontSize: 20,
         marginVertical: 8,
-        backgroundColor: '#C4DBE2',
-        width: 85,
         borderRadius: 5,
     },
-    wightText: {
+    weightText: {
         fontSize: 18,
         color: 'black',
         fontWeight: 'bold',
         fontSize: 20,
         textAlign: 'center',
         marginVertical: 8,
-        backgroundColor: '#C4DBE2',
+        padding: 5,        
+        backgroundColor: '#fccfd5',
         borderRadius: 5,
-        marginLeft: 40,
-        marginRight: 40,
+        width: "40%",
     },
 
     foodcategory: {
-        backgroundColor: "white",
-        borderColor: "black",
+        borderColor: "#eb3b5a",
+        color: "#eb3b5a",
         borderWidth: 1,
         borderRadius: 5,
         alignSelf: 'flex-start',
@@ -110,7 +108,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     viewRecipeButton: {
-        backgroundColor: "#eb3b5a",
+        backgroundColor: "#d9254e",
         width: "100%",
         padding: 10,
         borderRadius: 5,
